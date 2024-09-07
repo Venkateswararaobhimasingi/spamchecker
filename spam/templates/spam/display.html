@@ -1,0 +1,87 @@
+{% extends 'spam/home.html' %}
+{% block content %}
+<style>
+    .body1 {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .date-time1 {
+        font-size: 0.9em;
+        color: #555;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    .email-container1 {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        background: transparent;
+        backdrop-filter: blur(10px);
+        border:2px solid gray;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px);
+        overflow-wrap: break-word;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .spam-alert {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .email-header1 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .email-header1 div {
+        margin-bottom: 5px;
+    }
+
+    .email-subject1 {
+        font-size: 1.5em;
+        word-wrap: break-word;
+    }
+
+    .email-body1 {
+        margin-bottom: 20px;
+        line-height: 1.6;
+        font-size: 1em;
+        overflow-wrap: break-word;
+    }
+
+    .email-footer1 {
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+        text-align: center;
+    }
+</style>
+<div style="padding-top: 85px;">
+<div class="body1" style="color: white;">
+    <div class="email-container1">
+        <div class="date-time1" style="color: white;">{{ message.date_sent|date:"d/m/Y H:i" }}</div>
+        {% if message.is_spam %}
+        <div class="spam-alert">Spam Alert: This message may be spam.</div>
+        {% endif %}
+        <div class="email-header1">
+            <div><strong>From:</strong> {{ message.from_address }}</div>
+            <div><strong>To:</strong> {{ message.to_address }}</div>
+            <div class="email-subject1"><strong>Subject:</strong> {{ message.subject }}</div>
+            <div style="color: white;"><strong style="color: white;">Date Sent:</strong> {{ message.date_sent|date:"F j, Y, g:i A" }}</div>
+        </div>
+        <div class="email-body1">
+            {{ message.message_content|linebreaks }}
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

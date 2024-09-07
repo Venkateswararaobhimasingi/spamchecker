@@ -1,0 +1,63 @@
+{% extends 'spam/home.html' %}
+{% block content %}
+<style>
+    .body2 {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.8); /* Glossy background effect */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        backdrop-filter: blur(5px); /* Optional: adds a blur effect behind the container */
+    }
+
+    .input2, .textarea2 {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .button2 {
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .button2:hover {
+        background-color: #218838;
+    }
+</style>
+
+<div class="body2">
+    <form method="post" action="{% url 'create' %}">
+        {% csrf_token %}
+        
+        <!-- Manual form fields -->
+        <div>
+            <label for="id_to_address">To Address:</label>
+            <input type="email" name="to_address" id="id_to_address" class="input2" required>
+        </div>
+        
+        <div>
+            <label for="id_subject">Subject:</label>
+            <input type="text" name="subject" id="id_subject" class="input2" required>
+        </div>
+
+        <div>
+            <label for="id_message_content">Message Content:</label>
+            <textarea name="message_content" id="id_message_content" class="textarea2" required></textarea>
+        </div>
+        
+        <button type="submit" class="button2">Send Message</button>
+    </form>
+</div>
+{% endblock %}

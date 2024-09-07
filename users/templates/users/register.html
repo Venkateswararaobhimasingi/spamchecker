@@ -1,0 +1,62 @@
+{% extends "spam/home.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    /* Center the container */
+    .content-section {
+        max-width: 700px; /* Adjust the width as needed */
+        margin: 0 auto; /* Center the content horizontally */
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.85); /* White with light transparency */
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Align form labels to the left */
+    .form-group label {
+        text-align: left;
+        display: block; /* Ensures labels take the full width */
+        margin-bottom: 5px; /* Adds some space below each label */
+        font-weight: bold; /* Optional: Make labels bold */
+    }
+
+    .form-group {
+        text-align: center;
+        margin-bottom: 15px; /* Adds spacing between form elements */
+    }
+
+    /* Button styling with border and blue glow on focus */
+    .btn-outline-info {
+        width: 60%;
+        border: 2px solid #007bff; /* Blue border */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow effect */
+        transition: box-shadow 0.3s ease-in-out; /* Smooth transition effect */
+    }
+
+    .btn-outline-info:focus,
+    .btn-outline-info:hover {
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.8); /* Stronger blue glow on focus or hover */
+    }
+</style>
+
+<div style="padding-top: 15px;">
+    <div class="content-section">
+        <form method='POST'>
+            {% csrf_token %}
+            <fieldset class="form-group">
+               
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+        </form>
+        <div class="border-top pt-3 text-center">
+            <small class="text-muted">
+                Already Have An Account? 
+                <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock content %}

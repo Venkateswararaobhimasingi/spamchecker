@@ -1,0 +1,79 @@
+{% extends "spam/home.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .content-section {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .media {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .account-img {
+        width: 100px;
+        height: 100px;
+        margin-right: 20px;
+        object-fit: cover;
+        border: 2px solid #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .account-heading {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .text-secondary {
+        color: #6c757d; /* Adjusts the text color for secondary information */
+    }
+
+    .form-group {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .btn-outline-info {
+        width: 60%;
+        border: 2px solid #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .btn-outline-info:focus,
+    .btn-outline-info:hover {
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.8);
+    }
+</style>
+
+<div style="padding-top: 15px;">
+    <div class="content-section">
+        <div class="media">
+            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" alt="{{ user.title }}">
+            <div class="media-body">
+                <h2 class="account-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile Info</legend>
+                {{ u_form|crispy }}
+                {{ p_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

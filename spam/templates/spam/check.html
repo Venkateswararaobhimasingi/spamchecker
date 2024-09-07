@@ -1,0 +1,99 @@
+{% extends 'spam/home.html' %}
+{% block content %}
+<style>
+    .body2 {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.8); /* Glossy background effect */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        backdrop-filter: blur(5px); /* Optional: adds a blur effect behind the container */
+    }
+
+    .textarea2 {
+        width: 100%;
+        height: 150px; /* Increased height */
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .button2 {
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .button2:hover {
+        background-color: #218838;
+    }
+
+    .result {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 16px;
+        color: white;
+        border-radius: 4px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .spam {
+        background-color: #dc3545; /* Red for spam */
+    }
+
+    .not-spam {
+        background-color: #28a745; /* Green for not spam */
+    }
+</style>
+
+<div class="body2">
+    <form method="post" action="{% url 'check' %}">
+        {% csrf_token %}
+        
+        <div>
+            <label for="id_message_content">Message Content:</label>
+            <textarea name="message_content" id="id_message_content" class="textarea2" required>{{ message_content }}</textarea>
+        </div>
+        
+        <button type="submit" class="button2">Check Spam</button>
+    </form>
+
+    {% if spam_check_result is not None %}
+        <div id="result" class="result {% if spam_check_result %}spam{% else %}not-spam{% endif %}">
+            {% if spam_check_result %}
+                This message is classified as spam.
+            {% else %}
+                This message is not spam.
+            {% endif %}
+        </div>
+    {% else %}
+        <div id="result" class="result hidden"></div>
+    {% endif %}
+</div>
+
+<script>
+    // Get references to the textarea and the result message
+    const textarea = document.getElementById('id_message_content');
+    const result = document.getElementById('result');
+
+    // Add an event listener to the textarea to detect input changes
+    textarea.addEventListener('input', () => {
+        // Hide the result message whenever the textarea content is modified
+        if (textarea.value.trim() !== "") {
+            result.classList.add('hidden');
+        }
+    });
+</script>
+{% endblock %}
