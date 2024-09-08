@@ -9,5 +9,5 @@ sqlparse==0.4.4
 tzdata==2023.3
 urllib3==2.1.0
 django-crispy-forms==1.14.0
-crispy-bootstrap4==5.1
+crispy-bootstrap4==2024.1
 nltk==3.8.1
