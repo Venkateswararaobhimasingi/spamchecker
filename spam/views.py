@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Message
 from django.db.models import Q
@@ -11,15 +11,21 @@ from nltk.corpus import stopwords
 from nltk.tokenize import TreebankWordTokenizer
 from nltk.stem.porter import PorterStemmer
 import nltk
+import tempfile
 
-# Download necessary NLTK data
-nltk.download('punkt')
-nltk.download('stopwords')
+# Set up temporary directory for NLTK data
+temp_dir = tempfile.gettempdir()
+nltk.data.path.append(temp_dir)
+
+# Download necessary NLTK data to the temporary directory
+nltk.download('punkt', download_dir=temp_dir)
+nltk.download('stopwords', download_dir=temp_dir)
 
 # Initialize the Porter Stemmer and tokenizer
 ps = PorterStemmer()
 tokenizer = TreebankWordTokenizer()
 
+# Load the pre-trained TF-IDF vectorizer and model
 tfidf = pickle.load(open('vectorizer.pkl', 'rb'))
 model = pickle.load(open('model.pkl', 'rb'))
 
